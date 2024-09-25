@@ -8,6 +8,7 @@ import (
 	"github.com/gogf/gf/v2/os/gcmd"
 
 	"cybernetics/internal/controller/hello"
+	"cybernetics/internal/router"
 )
 
 var (
@@ -22,6 +23,7 @@ var (
 				group.Bind(
 					hello.NewV1(),
 				)
+				router.Admin(ctx, group)
 			})
 			s.Run()
 			return nil
