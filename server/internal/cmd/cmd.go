@@ -1,0 +1,97 @@
+package cmd
+
+import (
+	"context"
+
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/os/gcmd"
+
+	"cybernetics/internal/controller/hello"
+	"cybernetics/internal/router"
+	"cybernetics/utility/simple"
+)
+
+var (
+	Main = gcmd.Command{
+		Name:  "main",
+		Usage: "main",
+		Brief: "start all server",
+		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			s := g.Server()
+			s.Group("/", func(group *ghttp.RouterGroup) {
+				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Bind(
+					hello.NewV1(),
+				)
+				router.Admin(ctx, group)
+			})
+			s.Run()
+			return nil
+		},
+	}
+
+	Help = &gcmd.Command{
+		Name:  "help",
+		Brief: "查看帮助",
+		Description: `
+		命令提示符
+		---------------------------------------------------------------------------------
+		启动服务
+		>> 所有服务  [go run main.go]   热编译  [gf run main.go]
+		>> HTTP服务  [go run main.go http]
+		>> 消息队列  [go run main.go queue]
+		>> 定时任务  [go run main.go cron]
+		>> 查看帮助  [go run main.go help]
+
+		---------------------------------------------------------------------------------
+		工具
+		>> 释放casbin权限，用于清理无效的权限设置  [go run main.go tools -m=casbin -a1=refresh]
+		>> 打印所有打包的资源文件列表  [go run main.go tools -m=gres -a1=dump]
+		>> 打印指定打包的资源文件内容  [go run main.go tools -m=gres -a1=content -a2=resource/template/home/index.html]
+		---------------------------------------------------------------------------------
+		升级更新
+		>> 修复菜单关系树  [go run main.go up -m=fix -a1=menuTree]
+		---------------------------------------------------------------------------------
+		更多
+       	github地址：https://github.com/bufanyun/hotgo
+		文档地址：https://github.com/bufanyun/hotgo/tree/v2.0/docs/guide-zh-CN	
+		HotGo框架交流1群：190966648
+    `,
+	}
+
+	All = &gcmd.Command{
+		Name:        "all",
+		Brief:       "start all server",
+		Description: "this is the command entry for starting all server",
+		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			g.Log().Debug(ctx, "starting all server")
+
+			// 需要启动的服务
+			var allServers = []*gcmd.Command{Http}
+
+			for _, server := range allServers {
+				var cmd = server
+				simple.SafeGo(ctx, func(ctx context.Context) {
+					if err := cmd.Func(ctx, parser); err != nil {
+						g.Log().Fatalf(ctx, "%v start fail:%v", cmd.Name, err)
+					}
+				})
+			}
+
+			// 信号监听
+			signalListen(ctx, signalHandlerForOverall)
+
+			<-serverCloseSignal
+			serverWg.Wait()
+			g.Log().Debug(ctx, "all service successfully closed ..")
+			return
+		},
+	}
+)
+
+func init() {
+	if err := Main.AddCommand(All, Http, Help); err != nil {
+		panic(err)
+	}
+}
