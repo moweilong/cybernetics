@@ -1,0 +1,1 @@
+export const createSlice = createSliceCreater<keyof ReduxState>();
