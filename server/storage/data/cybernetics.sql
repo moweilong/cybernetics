@@ -1,5 +1,8 @@
+CREATE DATABASE IF NOT EXISTS `cybernetics` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `cybernetics`;
+
 CREATE TABLE IF NOT EXISTS `c9s_admin_dept` (
-  `id` bigint NOT NULL COMMENT '部门ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '部门ID',
   `pid` bigint DEFAULT '0' COMMENT '父部门ID',
   `name` varchar(32) DEFAULT NULL COMMENT '部门名称',
   `code` varchar(255) DEFAULT NULL COMMENT '部门编码',
@@ -12,12 +15,44 @@ CREATE TABLE IF NOT EXISTS `c9s_admin_dept` (
   `sort` int DEFAULT '0' COMMENT '排序',
   `status` tinyint DEFAULT '1' COMMENT '部门状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 )  COMMENT='管理员_部门';
+
+INSERT INTO `c9s_admin_dept` (`id`, `pid`, `name`, `code`, `type`, `leader`, `phone`, `email`, `level`, `tree`, `sort`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'c9s', 'c9s', 'company', 'admin', '15888888888', '15888888888@admin.com', 1, '', 10, 1, '2024-10-16 10:45:24', '2024-10-16 10:45:24'),
+(2, 1, '深圳总公司', 'shenzhen', 'company', 'hotgo', '15888888888', 'hotgo@qq.com', 2, 'tr_100 ', 20, 1, '2022-01-04 17:54:52', '2023-08-02 14:03:23'),
+(3, 1, '租户', 'tenant', 'tenant', 'hotgo', '15888888888', 'hotgo@qq.com', 2, 'tr_100 ', 1000, 1, '2022-01-04 01:54:52', '2024-04-13 22:24:58'),
+(4, 2, '研发部门', 'science', 'company', 'hotgo', '15888888888', 'hotgo@qq.com', 3, 'tr_100 tr_101 ', 40, 1, '2022-01-04 17:54:52', '2024-04-12 09:29:37'),
+(5, 2, '测试部门', 'test', 'company', 'hotgo', '15888888888', 'hotgo@qq.com', 3, 'tr_100 tr_101 ', 50, 1, '2022-01-04 17:54:52', '2024-04-12 09:29:41'),
+(6, 2, '财务部门', 'finance', 'company', 'hotgo', '15888888888', 'hotgo@qq.com', 3, 'tr_100 tr_101 ', 60, 1, '2022-01-04 17:54:52', '2024-04-12 09:29:45'),
+(7, 2, '运维部门', 'maintain', 'company', 'hotgo', '15888888888', 'hotgo@qq.com', 3, 'tr_100 tr_101 ', 70, 1, '2022-01-04 09:54:52', '2024-04-12 09:29:49'),
+(8, 3, '用户', 'user', 'user', 'hotgo', '15888888888', 'hotgo@qq.com', 4, 'tr_100 tr_102 tr_111 ', 10, 1, '2024-04-12 09:18:44', '2024-04-13 22:25:07'),
+(9, 3, '商户', 'merchant', 'merchant', 'hotgo', '15888888888', 'hotgo@qq.com', 3, 'tr_100 tr_102 ', 2000, 1, '2024-04-12 09:31:58', '2024-04-14 22:00:20');
+
+CREATE TABLE IF NOT EXISTS `c9s_admin_role` (
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '角色ID',
+  `name` varchar(32) NOT NULL COMMENT '角色名称',
+  `key` varchar(128) NOT NULL COMMENT '角色权限字符串',
+  `data_scope` tinyint DEFAULT '1' COMMENT '数据范围',
+  `custom_dept` json DEFAULT NULL COMMENT '自定义部门权限',
+  `pid` bigint DEFAULT '0' COMMENT '上级角色ID',
+  `level` int NOT NULL DEFAULT '1' COMMENT '关系树等级',
+  `tree` varchar(512) DEFAULT NULL COMMENT '关系树',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '角色状态',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) COMMENT='管理员_角色信息';
+
+INSERT INTO `c9s_admin_role` (`id`, `name`, `key`, `data_scope`, `custom_dept`, `pid`, `level`, `tree`, `remark`, `sort`, `status`, `created_at`, `updated_at`) VALUES
+(1, '超级管理员', 'super', 1, '[]', 1, 1, NULL, '超级管理员，拥有全部权限', 1, 1, '2024-10-16 10:45:24', '2024-10-16 10:45:24');
 
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_member` (
-  `id` bigint NOT NULL COMMENT '管理员ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '管理员ID',
   `dept_id` bigint DEFAULT '0' COMMENT '部门ID',
   `role_id` bigint DEFAULT '10' COMMENT '角色ID',
   `real_name` varchar(32) DEFAULT '' COMMENT '真实姓名',
@@ -44,50 +79,25 @@ CREATE TABLE IF NOT EXISTS `c9s_admin_member` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `status` tinyint DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='管理员_用户表';
 
 INSERT INTO `c9s_admin_member` (`id`, `dept_id`, `role_id`, `real_name`, `username`, `password_hash`, `salt`, `password_reset_token`, `integral`, `balance`, `avatar`, `sex`, `qq`, `email`, `mobile`, `birthday`, `city_id`, `address`, `pid`, `level`, `tree`, `invite_code`, `cash`, `last_active_at`, `remark`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'admin', 'admin', 'a7c588fffeb2c1d99b29879d7fe97c78', '6541561', '', '88.00', '99289.78', 'http://bufanyun.cn-bj.ufileos.com/hotgo/attachment/2023-02-09/cqdq8er9nfkchdopav.png', 1, '133814250', '133814250@qq.com', '15303830571', '2016-04-16', 410172, '莲花街001号', 0, 1, '', '111', '{"name": "admin", "account": "15303830571", "payeeCode": "http://bufanyun.cn-bj.ufileos.com/hotgo/attachment/2023-02-09/cqdq8mqal5isvcb58g.jpg"}', '2024-08-27 19:02:49', NULL, 1, '2021-02-12 17:59:45', '2024-08-27 19:02:49')
-
-
-CREATE TABLE IF NOT EXISTS `c9s_admin_member_post` (
-  `member_id` bigint NOT NULL COMMENT '管理员ID',
-  `post_id` bigint NOT NULL COMMENT '岗位ID'
-) COMMENT='管理员_用户岗位关联';
-
-
-
-
+(1, 1, 1, 'admin', 'admin', 'a7c588fffeb2c1d99b29879d7fe97c78', '6541561', '', '88.00', '99289.78', 'http://bufanyun.cn-bj.ufileos.com/hotgo/attachment/2023-02-09/cqdq8er9nfkchdopav.png', 1, '133814250', '133814250@qq.com', '15303830571', '2016-04-16', 410172, '莲花街001号', 0, 1, '', '111', '{"name": "admin", "account": "15303830571", "payeeCode": "http://bufanyun.cn-bj.ufileos.com/hotgo/attachment/2023-02-09/cqdq8mqal5isvcb58g.jpg"}', '2024-08-27 19:02:49', NULL, 1, '2021-02-12 17:59:45', '2024-08-27 19:02:49');
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_member_role` (
   `member_id` bigint NOT NULL COMMENT '管理员ID',
   `role_id` bigint NOT NULL COMMENT '角色ID'
 ) COMMENT='管理员_用户角色关联';
 
-INSERT INTO `c9s_admin_role` (`id`, `name`, `key`, `data_scope`, `custom_dept`, `pid`, `level`, `tree`, `remark`, `sort`, `status`, `created_at`, `updated_at`) VALUES
-(1, '超级管理员', 'super', 1, '[]', 0, 1, NULL, '超级管理员，拥有全部权限', 100, 1, '2022-01-04 17:54:52', '2023-01-12 00:00:00')
-
-
-CREATE TABLE IF NOT EXISTS `c9s_admin_role` (
-  `id` bigint NOT NULL COMMENT '角色ID',
-  `name` varchar(32) NOT NULL COMMENT '角色名称',
-  `key` varchar(128) NOT NULL COMMENT '角色权限字符串',
-  `data_scope` tinyint DEFAULT '1' COMMENT '数据范围',
-  `custom_dept` json DEFAULT NULL COMMENT '自定义部门权限',
-  `pid` bigint DEFAULT '0' COMMENT '上级角色ID',
-  `level` int NOT NULL DEFAULT '1' COMMENT '关系树等级',
-  `tree` varchar(512) DEFAULT NULL COMMENT '关系树',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint NOT NULL DEFAULT '1' COMMENT '角色状态',
-  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
-) COMMENT='管理员_角色信息';
-
+CREATE TABLE IF NOT EXISTS `c9s_admin_member_post` (
+  `member_id` bigint NOT NULL COMMENT '管理员ID',
+  `post_id` bigint NOT NULL COMMENT '岗位ID'
+) COMMENT='管理员_用户岗位关联';
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_menu` (
-  `id` bigint NOT NULL COMMENT '菜单ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '菜单ID',
   `pid` bigint DEFAULT '0' COMMENT '父菜单ID',
   `level` int NOT NULL DEFAULT '1' COMMENT '关系树等级',
   `tree` varchar(255) NOT NULL COMMENT '关系树',
@@ -112,11 +122,12 @@ CREATE TABLE IF NOT EXISTS `c9s_admin_menu` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `status` tinyint DEFAULT '1' COMMENT '菜单状态',
   `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
-  `created_at` datetime DEFAULT NULL COMMENT '创建时间'
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='管理员_菜单权限';
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_ems_log` (
-  `id` bigint NOT NULL COMMENT '主键',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '主键',
   `event` varchar(64) NOT NULL COMMENT '事件',
   `email` varchar(512) NOT NULL COMMENT '邮箱地址，多个用;隔开',
   `code` varchar(256) DEFAULT '' COMMENT '验证码',
@@ -125,11 +136,12 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_ems_log` (
   `ip` varchar(128) DEFAULT NULL COMMENT 'ip地址',
   `status` tinyint DEFAULT '1' COMMENT '状态(1未验证,2已验证)',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_邮件发送记录';
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_sms_log` (
-  `id` bigint NOT NULL COMMENT '主键',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '主键',
   `event` varchar(64) NOT NULL COMMENT '事件',
   `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
   `code` varchar(256) DEFAULT '' COMMENT '验证码或短信内容',
@@ -137,12 +149,13 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_sms_log` (
   `ip` varchar(128) DEFAULT NULL COMMENT 'ip地址',
   `status` tinyint DEFAULT '1' COMMENT '状态(1未验证,2已验证)',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_短信发送记录';
 
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_login_log` (
-  `id` bigint NOT NULL COMMENT '日志ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '日志ID',
   `req_id` varchar(50) DEFAULT NULL COMMENT '请求ID',
   `member_id` bigint DEFAULT '0' COMMENT '用户ID',
   `username` varchar(64) DEFAULT NULL COMMENT '用户名',
@@ -155,12 +168,13 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_login_log` (
   `err_msg` varchar(1000) DEFAULT NULL COMMENT '错误提示',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_登录日志';
 
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_attachment` (
-  `id` bigint NOT NULL COMMENT '文件ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '文件ID',
   `app_id` varchar(64) NOT NULL COMMENT '应用ID',
   `member_id` bigint DEFAULT '0' COMMENT '管理员ID',
   `cate_id` bigint unsigned DEFAULT '0' COMMENT '上传分类',
@@ -176,12 +190,13 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_attachment` (
   `md5` varchar(32) DEFAULT NULL COMMENT 'md5校验码',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_附件管理';
 
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_config` (
-  `id` bigint NOT NULL COMMENT '配置ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '配置ID',
   `group` varchar(128) NOT NULL COMMENT '配置分组',
   `name` varchar(100) DEFAULT '' COMMENT '参数名称',
   `type` varchar(32) NOT NULL COMMENT '键值类型:string,int,uint,bool,datetime,date',
@@ -193,11 +208,12 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_config` (
   `is_default` tinyint DEFAULT '0' COMMENT '是否为系统默认',
   `status` tinyint DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_配置';
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_credits_log` (
-  `id` bigint NOT NULL COMMENT '变动ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '变动ID',
   `member_id` bigint DEFAULT '0' COMMENT '管理员ID',
   `app_id` varchar(64) DEFAULT NULL COMMENT '应用id',
   `addons_name` varchar(100) NOT NULL DEFAULT '' COMMENT '插件名称',
@@ -211,11 +227,12 @@ CREATE TABLE IF NOT EXISTS `c9s_admin_credits_log` (
   `map_id` bigint DEFAULT '0' COMMENT '关联ID',
   `status` tinyint DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='管理员_资产变动表';
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_provinces` (
-  `id` bigint NOT NULL COMMENT '省市区ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '省市区ID',
   `title` varchar(50) NOT NULL DEFAULT '' COMMENT '栏目名称',
   `pinyin` varchar(100) DEFAULT '' COMMENT '拼音',
   `lng` varchar(20) DEFAULT '' COMMENT '经度',
@@ -226,18 +243,20 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_provinces` (
   `sort` int DEFAULT '0' COMMENT '排序',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_省市区编码';
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_role_casbin` (
-  `id` bigint NOT NULL,
+  `id` bigint AUTO_INCREMENT NOT NULL,
   `p_type` varchar(64) DEFAULT NULL,
   `v0` varchar(256) DEFAULT NULL,
   `v1` varchar(256) DEFAULT NULL,
   `v2` varchar(256) DEFAULT NULL,
   `v3` varchar(256) DEFAULT NULL,
   `v4` varchar(256) DEFAULT NULL,
-  `v5` varchar(256) DEFAULT NULL
+  `v5` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) COMMENT='管理员_casbin权限表';
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_role_menu` (
@@ -246,16 +265,20 @@ CREATE TABLE IF NOT EXISTS `c9s_admin_role_menu` (
 ) COMMENT='管理员_角色菜单关联';
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_blacklist` (
-  `id` bigint NOT NULL COMMENT '黑名单ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '黑名单ID',
   `ip` varchar(100) DEFAULT '' COMMENT 'IP地址',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `status` tinyint DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_访问黑名单';
 
+INSERT INTO `c9s_sys_blacklist` (`id`, `ip`, `remark`, `status`, `created_at`, `updated_at`) VALUES
+(1, '10.66.3.113', '', 2, '2024-10-01 22:02:09', '2024-10-01 22:39:23');
+
 CREATE TABLE IF NOT EXISTS `c9s_sys_log` (
-  `id` bigint NOT NULL COMMENT '日志ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '日志ID',
   `req_id` varchar(50) DEFAULT NULL COMMENT '对外ID',
   `app_id` varchar(50) DEFAULT '' COMMENT '应用ID',
   `merchant_id` bigint unsigned DEFAULT '0' COMMENT '商户ID',
@@ -277,12 +300,13 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_log` (
   `timestamp` bigint DEFAULT '0' COMMENT '响应时间',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_全局日志';
 
 
 CREATE TABLE IF NOT EXISTS `c9s_sys_serve_log` (
-  `id` bigint NOT NULL COMMENT '日志ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '日志ID',
   `trace_id` varchar(50) DEFAULT NULL COMMENT '链路ID',
   `level_format` varchar(32) DEFAULT NULL COMMENT '日志级别',
   `content` text COMMENT '日志内容',
@@ -291,16 +315,18 @@ CREATE TABLE IF NOT EXISTS `c9s_sys_serve_log` (
   `trigger_ns` bigint DEFAULT NULL COMMENT '触发时间(ns)',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '修改时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='系统_服务日志';
 
 CREATE TABLE IF NOT EXISTS `c9s_admin_post` (
-  `id` bigint NOT NULL COMMENT '岗位ID',
+  `id` bigint AUTO_INCREMENT NOT NULL COMMENT '岗位ID',
   `code` varchar(64) NOT NULL COMMENT '岗位编码',
   `name` varchar(50) NOT NULL COMMENT '岗位名称',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `sort` int NOT NULL COMMENT '排序',
   `status` tinyint NOT NULL COMMENT '状态',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间'
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) COMMENT='管理员_岗位';
