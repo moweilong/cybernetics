@@ -1,3 +1,0 @@
-2024-09-25 17:54:22.327 [DEBU] {7dfaf0650e74f817f69b752b7c6d1463} [ 41 ms] [default] [cybernetics] [rows:5  ] SHOW TABLES
-2024-09-25 17:54:22.333 [DEBU] {7dfaf0650e74f817f69b752b7c6d1463} [  6 ms] [default] [cybernetics] [rows:14 ] SHOW FULL COLUMNS FROM `c9s_admin_dept`
-2024-09-25 17:54:22.335 [DEBU] {7dfaf0650e74f817f69b752b7c6d1463} [  2 ms] [default] [cybernetics] [rows:0  ] SELECT `id`,`pid`,`name`,`code`,`type`,`leader`,`phone`,`email`,`level`,`tree`,`sort`,`status`,`created_at`,`updated_at` FROM `c9s_admin_dept` ORDER BY `pid` asc,`sort` asc
