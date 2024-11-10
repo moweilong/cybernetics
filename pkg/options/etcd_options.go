@@ -18,7 +18,7 @@ type EtcdOptions struct {
 	TLSOptions  *TLSOptions   `json:"tls"               mapstructure:"tls"`
 }
 
-// NewEtcdOptions create a `c9s` value instance.
+// NewEtcdOptions create a `cybernetics` value instance.
 func NewEtcdOptions() *EtcdOptions {
 	return &EtcdOptions{
 		Endpoints:   []string{"127.0.0.1:2379"},

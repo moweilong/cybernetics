@@ -22,7 +22,7 @@ type JaegerOptions struct {
 	Env         string `json:"env,omitempty" mapstructure:"env"`
 }
 
-// NewJaegerOptions create a `c9s` value instance.
+// NewJaegerOptions create a `cybernetics` value instance.
 func NewJaegerOptions() *JaegerOptions {
 	return &JaegerOptions{
 		Server: "http://127.0.0.1:14268/api/traces",

@@ -15,7 +15,7 @@ type PolarisOptions struct {
 	WriteTimeout time.Duration `json:"write-timeout" mapstructure:"write-timeout"`
 }
 
-// NewPolarisOptions create a `c9s` value instance.
+// NewPolarisOptions create a `cybernetics` value instance.
 func NewPolarisOptions() *PolarisOptions {
 	return &PolarisOptions{
 		Addr:         "127.0.0.1:8080",

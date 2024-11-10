@@ -25,7 +25,7 @@ type MySQLOptions struct {
 	LogLevel              int           `json:"log-level" mapstructure:"log-level"`
 }
 
-// NewMySQLOptions create a `c9s` value instance.
+// NewMySQLOptions create a `cybernetics` value instance.
 func NewMySQLOptions() *MySQLOptions {
 	return &MySQLOptions{
 		Addr:                  "127.0.0.1:3306",

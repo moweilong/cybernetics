@@ -17,7 +17,7 @@ const (
 	reason string = "Unauthorized"
 
 	// defaultKey holds the default key used to sign a jwt token.
-	defaultKey = "onex(#)666"
+	defaultKey = "cybernetics(#)666"
 )
 
 var (

@@ -10,7 +10,7 @@ import (
 
 // Define unit constant.
 const (
-	_   = iota // ignore c9s.iota
+	_   = iota // ignore cybernetics.iota
 	KiB = 1 << (10 * iota)
 	MiB
 	GiB

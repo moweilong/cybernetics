@@ -80,7 +80,7 @@ func (a *authnImpl) Sign(ctx context.Context, userID string) (authn.IToken, erro
 
 	opts := []jwtauthn.Option{
 		jwtauthn.WithSigningMethod(jwt.SigningMethodHS512),
-		jwtauthn.WithIssuer("onex-usercenter"),
+		jwtauthn.WithIssuer("cybernetics-usercenter"),
 		jwtauthn.WithTokenHeader(map[string]any{"kid": secret.SecretID}),
 		jwtauthn.WithExpired(known.AccessTokenExpire),
 		jwtauthn.WithSigningKey([]byte(secret.SecretKey)),

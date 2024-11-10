@@ -10,16 +10,16 @@ define USAGE_OPTIONS
   DBG              Whether to generate debug symbols. Default is 0.
   BINS             The binaries to build. Default is all of cmd.
                    This option is available when using: make build/build.multiarch
-                   Example: make build BINS="onex-apiserver onex-miner-controller"
-  IMAGES           Backend images to make. Default is all of cmd starting with onex-.
+                   Example: make build BINS="cybernetics-apiserver cybernetics-miner-controller"
+  IMAGES           Backend images to make. Default is all of cmd starting with cybernetics-.
                    This option is available when using: make image/image.multiarch/push/push.multiarch
-                   Example: make image.multiarch IMAGES="onex-apiserver onex-miner-controller"
+                   Example: make image.multiarch IMAGES="cybernetics-apiserver cybernetics-miner-controller"
   DEPLOYS          Deploy all configured services.
   REGISTRY_PREFIX  Docker registry prefix. Default is superproj. 
                    Example: make push REGISTRY_PREFIX=ccr.ccs.tencentyun.com/superproj VERSION=v0.1.0
   PLATFORMS        The multiple platforms to build. Default is linux_amd64 and linux_arm64.
                    This option is available when using: make build.multiarch/image.multiarch/push.multiarch
-                   Example: make image.multiarch IMAGES="onex-apiserver onex-miner-controller" PLATFORMS="linux_amd64 linux_arm64"
+                   Example: make image.multiarch IMAGES="cybernetics-apiserver cybernetics-miner-controller" PLATFORMS="linux_amd64 linux_arm64"
   PLATFORMS        The multiple platforms to build. Default is linux_amd64 and linux_arm64.
                    This option is available when using: make build.multiarch/image.multiarch/push.multiarch
   MULTISTAGE       Set to 1 to build docker images using multi-stage builds. Default is 0.

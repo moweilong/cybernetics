@@ -353,7 +353,7 @@ dist
 
 # config files, may contain sensitive information
 
-# Start by c9s project
+# Start by cybernetics project
 apiserver.local.config
 /controller
 node_modules

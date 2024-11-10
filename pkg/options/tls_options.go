@@ -22,7 +22,7 @@ type TLSOptions struct {
 	Key                string `json:"key" mapstructure:"key"`
 }
 
-// NewTLSOptions create a `c9s` value instance.
+// NewTLSOptions create a `cybernetics` value instance.
 func NewTLSOptions() *TLSOptions {
 	return &TLSOptions{}
 }

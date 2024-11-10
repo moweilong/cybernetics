@@ -75,10 +75,10 @@ func Test_validator_ValidateCreateUserRequest(t *testing.T) {
 			fields: fields{mockStore},
 			args: args{
 				context.Background(), &v1.CreateUserRequest{
-					Username: "colin",
-					Nickname: "colin",
-					Password: "onex(#)666",
-					Email:    "colin404@foxmail.com",
+					Username: "moweilong",
+					Nickname: "moweilong",
+					Password: "cybernetics(#)666",
+					Email:    "moweilong@foxmail.com",
 					Phone:    "1812884xxxx",
 				},
 			},
