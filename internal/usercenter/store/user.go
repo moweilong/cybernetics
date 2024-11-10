@@ -30,7 +30,9 @@ type UserStore interface {
 }
 
 // UserExpansion defines additional methods for user operations.
-type UserExpansion interface{}
+type UserExpansion interface {
+	GetByUsername(ctx context.Context, username string) (*model.UserM, error)
+}
 
 // userStore implements the UserStore interface.
 type userStore struct {
@@ -45,4 +47,13 @@ func newUserStore(ds *datastore) *userStore {
 	return &userStore{
 		Store: genericstore.NewStore[model.UserM](ds, cybernetics.NewLogger()),
 	}
+}
+
+func (s *userStore) GetByUsername(ctx context.Context, username string) (*model.UserM, error) {
+	var obj model.UserM
+	if err := S.DB(ctx).Where("username =?", username).First(&obj).Error; err != nil {
+		return nil, err
+	}
+
+	return &obj, nil
 }

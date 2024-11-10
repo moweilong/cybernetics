@@ -61,6 +61,14 @@ include scripts/make-rules/all.mk
 
 ##@ Generate
 
+.PHONY: gen
+gen: ## Generate CI-related files. Generate all files by specifying `A=1`.
+ifeq ($(ALL),1)
+	$(MAKE) gen.all
+else
+	$(MAKE) gen.run
+endif
+
 .PHONY: protoc
 protoc: ## Generate api proto files.
 	$(MAKE) gen.protoc

@@ -12,6 +12,7 @@ require (
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-kratos/kratos/v2 v2.8.2
 	github.com/golang-jwt/jwt/v4 v4.5.1
+	github.com/golang/mock v1.4.4
 	github.com/google/go-cmp v0.6.0
 	github.com/google/gofuzz v1.2.0
 	github.com/google/wire v0.6.0

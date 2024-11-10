@@ -10,6 +10,11 @@ ifeq ($(origin CYBERNETICS_ROOT),undefined)
 CYBERNETICS_ROOT :=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 endif
 
+include $(CYBERNETICS_ROOT)/scripts/make-rules/common-versions.mk
+
+# Helper function to get dependency version from go.mod
+get_go_version = $(shell go list -m $1 | awk '{print $$2}')
+
 # ==============================================================================
 # Generate options
 #
