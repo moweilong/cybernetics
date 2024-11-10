@@ -1,0 +1,519 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: UserCenter API
+    description: Peer lists  hubble peers and notifies of changes.
+    version: 0.0.1
+paths:
+    /v1/auth/auth:
+        post:
+            tags:
+                - UserCenter
+            description: Auth
+            operationId: UserCenter_Auth
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.AuthRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.AuthResponse'
+    /v1/auth/authenticate:
+        post:
+            tags:
+                - UserCenter
+            description: Authenticate
+            operationId: UserCenter_Authenticate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.AuthenticateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.AuthenticateResponse'
+    /v1/auth/authorize:
+        post:
+            tags:
+                - UserCenter
+            description: Authorize
+            operationId: UserCenter_Authorize
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.AuthorizeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.AuthorizeResponse'
+    /v1/auth/login:
+        post:
+            tags:
+                - UserCenter
+            description: Login
+            operationId: UserCenter_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.LoginReply'
+    /v1/auth/logout:
+        post:
+            tags:
+                - UserCenter
+            description: Logout
+            operationId: UserCenter_Logout
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.LogoutRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/auth/refresh-token:
+        post:
+            tags:
+                - UserCenter
+            description: RefreshToken
+            operationId: UserCenter_RefreshToken
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.RefreshTokenRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.LoginReply'
+    /v1/secrets:
+        get:
+            tags:
+                - UserCenter
+            description: ListSecret
+            operationId: UserCenter_ListSecret
+            parameters:
+                - name: limit
+                  in: query
+                  schema:
+                    type: string
+                - name: offset
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.ListSecretResponse'
+        post:
+            tags:
+                - UserCenter
+            description: CreateSecret
+            operationId: UserCenter_CreateSecret
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.CreateSecretRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.SecretReply'
+    /v1/secrets/{name}:
+        get:
+            tags:
+                - UserCenter
+            description: GetSecret
+            operationId: UserCenter_GetSecret
+            parameters:
+                - name: name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.SecretReply'
+        put:
+            tags:
+                - UserCenter
+            description: UpdateSecret
+            operationId: UserCenter_UpdateSecret
+            parameters:
+                - name: name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.UpdateSecretRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+        delete:
+            tags:
+                - UserCenter
+            description: DeleteSecret
+            operationId: UserCenter_DeleteSecret
+            parameters:
+                - name: name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/users:
+        get:
+            tags:
+                - UserCenter
+            description: ListUser
+            operationId: UserCenter_ListUser
+            parameters:
+                - name: limit
+                  in: query
+                  schema:
+                    type: string
+                - name: offset
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.ListUserResponse'
+        post:
+            tags:
+                - UserCenter
+            description: CreateUser
+            operationId: UserCenter_CreateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.CreateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.UserReply'
+    /v1/users/{username}:
+        get:
+            tags:
+                - UserCenter
+            description: GetUser
+            operationId: UserCenter_GetUser
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/usercenter.v1.UserReply'
+        put:
+            tags:
+                - UserCenter
+            description: UpdateUser
+            operationId: UserCenter_UpdateUser
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+        delete:
+            tags:
+                - UserCenter
+            description: DeleteUser
+            operationId: UserCenter_DeleteUser
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/users/{username}/update-password:
+        put:
+            tags:
+                - UserCenter
+            description: UpdatePassword
+            operationId: UserCenter_UpdatePassword
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/usercenter.v1.UpdatePasswordRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+components:
+    schemas:
+        usercenter.v1.AuthRequest:
+            type: object
+            properties:
+                token:
+                    type: string
+                obj:
+                    type: string
+                act:
+                    type: string
+        usercenter.v1.AuthResponse:
+            type: object
+            properties:
+                userID:
+                    type: string
+                allowed:
+                    type: boolean
+        usercenter.v1.AuthenticateRequest:
+            type: object
+            properties:
+                token:
+                    type: string
+        usercenter.v1.AuthenticateResponse:
+            type: object
+            properties:
+                userID:
+                    type: string
+        usercenter.v1.AuthorizeRequest:
+            type: object
+            properties:
+                sub:
+                    type: string
+                obj:
+                    type: string
+                act:
+                    type: string
+        usercenter.v1.AuthorizeResponse:
+            type: object
+            properties:
+                allowed:
+                    type: boolean
+        usercenter.v1.CreateSecretRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                expires:
+                    type: string
+                description:
+                    type: string
+        usercenter.v1.CreateUserRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                nickname:
+                    type: string
+                password:
+                    type: string
+                email:
+                    type: string
+                phone:
+                    type: string
+        usercenter.v1.ListSecretResponse:
+            type: object
+            properties:
+                totalCount:
+                    type: string
+                Secrets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/usercenter.v1.SecretReply'
+        usercenter.v1.ListUserResponse:
+            type: object
+            properties:
+                totalCount:
+                    type: string
+                Users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/usercenter.v1.UserReply'
+        usercenter.v1.LoginReply:
+            type: object
+            properties:
+                refreshToken:
+                    type: string
+                accessToken:
+                    type: string
+                type:
+                    type: string
+                expiresAt:
+                    type: string
+        usercenter.v1.LoginRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+        usercenter.v1.LogoutRequest:
+            type: object
+            properties: {}
+        usercenter.v1.RefreshTokenRequest:
+            type: object
+            properties: {}
+        usercenter.v1.SecretReply:
+            type: object
+            properties:
+                userID:
+                    type: string
+                name:
+                    type: string
+                secretID:
+                    type: string
+                secretKey:
+                    type: string
+                expires:
+                    type: string
+                status:
+                    type: integer
+                    format: int32
+                description:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+        usercenter.v1.UpdatePasswordRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                oldPassword:
+                    type: string
+                newPassword:
+                    type: string
+        usercenter.v1.UpdateSecretRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                expires:
+                    type: string
+                status:
+                    type: integer
+                    format: int32
+                description:
+                    type: string
+        usercenter.v1.UpdateUserRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                nickname:
+                    type: string
+                email:
+                    type: string
+                phone:
+                    type: string
+        usercenter.v1.UserReply:
+            type: object
+            properties:
+                userID:
+                    type: string
+                username:
+                    type: string
+                nickname:
+                    type: string
+                password:
+                    type: string
+                email:
+                    type: string
+                phone:
+                    type: string
+                secrets:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+tags:
+    - name: UserCenter

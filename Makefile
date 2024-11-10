@@ -56,6 +56,16 @@ include scripts/make-rules/common.mk # make sure include common.mk at the first 
 include scripts/make-rules/all.mk
 
 ## --------------------------------------
+## Generate / Manifests
+## --------------------------------------
+
+##@ Generate
+
+.PHONY: protoc
+protoc: ## Generate api proto files.
+	$(MAKE) gen.protoc
+
+## --------------------------------------
 ## Binaries
 ## --------------------------------------
 

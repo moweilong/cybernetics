@@ -11,6 +11,13 @@ CYBERNETICS_ROOT :=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 endif
 
 # ==============================================================================
+# Generate options
+#
+
+APIROOT ?= $(CYBERNETICS_ROOT)/pkg/api
+APISROOT ?= $(CYBERNETICS_ROOT)/pkg/apis
+
+# ==============================================================================
 # Build options
 #
 PRJ_SRC_PATH :=github.com/moweilong/cybernetics
