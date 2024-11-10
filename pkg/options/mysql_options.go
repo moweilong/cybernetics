@@ -25,13 +25,13 @@ type MySQLOptions struct {
 	LogLevel              int           `json:"log-level" mapstructure:"log-level"`
 }
 
-// NewMySQLOptions create a `zero` value instance.
+// NewMySQLOptions create a `c9s` value instance.
 func NewMySQLOptions() *MySQLOptions {
 	return &MySQLOptions{
 		Addr:                  "127.0.0.1:3306",
-		Username:              "c9s",
-		Password:              "c9s(#)999",
-		Database:              "c9s",
+		Username:              "cybernetics",
+		Password:              "cybernetics(#)666",
+		Database:              "cybernetics",
 		MaxIdleConnections:    100,
 		MaxOpenConnections:    100,
 		MaxConnectionLifeTime: time.Duration(10) * time.Second,

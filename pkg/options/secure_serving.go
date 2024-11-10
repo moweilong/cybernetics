@@ -50,8 +50,8 @@ func NewSecureServingOptions() *SecureServingOptions {
 		BindPort:    8443,
 		Required:    true,
 		ServerCert: GeneratableKeyCert{
-			PairName:      "c9s",
-			CertDirectory: "/var/run/c9s",
+			PairName:      "cybernetics",
+			CertDirectory: "/var/run/cybernetics",
 		},
 	}
 }
