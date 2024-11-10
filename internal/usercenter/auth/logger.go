@@ -17,6 +17,8 @@ import (
 // LoggerProviderSet defines a wire set for creating a kafkaLogger instance to implement log.Logger interface.
 var LoggerProviderSet = wire.NewSet(NewLogger, wire.Bind(new(clog.Logger), new(*kafkaLogger)))
 
+var _ clog.Logger = (*kafkaLogger)(nil)
+
 // kafkaLogger is a log.Logger implementation that writes log messages to Kafka.
 type kafkaLogger struct {
 	// enabled is an atomic boolean indicating whether the logger is enabled.
@@ -101,4 +103,11 @@ func (l *kafkaLogger) LogRole(roles []string) {
 		return
 	}
 	log.Debugw("LogRole", "roles", roles)
+}
+
+func (l *kafkaLogger) LogError(err error, msg ...string) {
+	if !l.IsEnabled() {
+		return
+	}
+	log.Debugw("LogError", "err", msg)
 }
