@@ -1,0 +1,92 @@
+networks:
+  cybernetics:
+
+volumes:
+  redis_data:
+  mysql_data:
+  etcd_data:
+  jaeger-data:
+
+services:
+  c9s-redis:
+    container_name: c9s-redis
+    restart: always
+    hostname: redis
+    image: redis:7.4.1
+    environment:
+      - REDIS_PASSWORD=cybernetics(#)666
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - cybernetics
+
+  c9s-mysql:
+    hostname: mysql
+    container_name: c9s-mysql
+    image: mysql:8.0.40
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: cybernetics(#)666
+      MYSQL_DATABASE: cybernetics
+      MYSQL_USER: cybernetics
+      MYSQL_PASSWORD: cybernetics(#)666
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - cybernetics
+
+  c9s-etcd:
+    hostname: etcd
+    restart: always
+    container_name: c9s-etcd
+    image: quay.io/coreos/etcd:v3.5.13
+    volumes:
+      - etcd_data:/etcd-data
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    networks:
+      - cybernetics
+
+  c9s-etcdkeeper:
+    hostname: etcdkeeper
+    restart: always
+    container_name: c9s-etcdkeeper
+    image: evildecay/etcdkeeper:v0.7.6
+    ports:
+      - "8080:8080"
+    networks:
+      - cybernetics
+
+  c9s-jaeger:
+    image: jaegertracing/all-in-one:1.52
+    hostname: jaeger
+    restart: always
+    container_name: c9s-jaeger
+    ports:
+      - "5775:5775/udp"   # Agent: Compact Thrift over UDP
+      - "6831:6831/udp"   # Agent: Binary Thrift over UDP
+      - "6832:6832/udp"   # Agent: Binary Thrift over UDP (Zipkin transport)
+      - "5778:5778"       # HTTP Port for the agent admin UI
+      - "16686:16686"     # Jaeger UI
+      - "14268:14268"     # HTTP Thrift port for sending spans
+      - "14250:14250"     # gRPC port for agent
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - jaeger-data:/jaeger-data
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+      - STORAGE_TYPE=memory
+      - MEMORY_STORAGE_SPAN_TTL=1m
+    networks:
+      - cybernetics

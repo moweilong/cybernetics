@@ -20,7 +20,7 @@ type UserM struct {
 	Password  string    `gorm:"column:password;type:varchar(64);not null;comment:用户加密后的密码" json:"password"`                                               // 用户加密后的密码
 	Email     string    `gorm:"column:email;type:varchar(253);not null;comment:用户电子邮箱" json:"email"`                                                      // 用户电子邮箱
 	Phone     string    `gorm:"column:phone;type:varchar(16);not null;comment:用户手机号" json:"phone"`                                                        // 用户手机号
-	CreatedAt time.Time `gorm:"column:created_at;type:datetime;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`                        // 创建时间
+	CreatedAt time.Time 
 	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime;not null;default:CURRENT_TIMESTAMP;comment:最后修改时间" json:"updated_at"`                      // 最后修改时间
 }
 
