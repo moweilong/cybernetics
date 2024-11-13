@@ -187,7 +187,7 @@ message ListUserResponse {
 message CreateUserRequest {
   string username = 1 [(validate.rules).string = {min_len: 1, max_len: 253}];
   string nickname = 2 [(validate.rules).string = {min_len: 1, max_len: 253}];
-  string password = 3 [(validate.rules).string = {min_len: 6, max_len: 16}];
+  string password = 3 [(validate.rules).string = {min_len: 6, max_len: 20}];
   string email = 4 [(validate.rules).string.email = true];
   string phone = 5 [(validate.rules).string.len = 11];
 }
